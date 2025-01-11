@@ -2,8 +2,9 @@ import { useNavigate } from "react-router-dom";
 import Input from "./Input";
 import Header from "./Header";
 import { useState } from "react";
+import { signupService } from "../services/AuthServices";
 
-interface formData {
+export interface formData {
   name: string;
   userName: string;
   email: string;
@@ -30,16 +31,22 @@ export default function Singup() {
     }));
   }
   
-  function handleFormSubmit(e: React.FormEvent): void {
+ async function handleFormSubmit(e: React.FormEvent): Promise<void> {
     e.preventDefault();
     // api request is here
-    console.log("form data: ", formData)
+    signupService(formData).then((response) => {
+      console.log("The response is: ",response);
+      sessionStorage.setItem("token",response.data.accessToken)
+      navigator("/")
+    }).catch((error) => {
+      console.error(error)
+    })
   }
   // Evenet Handlers
 
   return (
     <div>
-      <Header pageTitle="Sign up Page" signType="Sign in" />;
+      <Header pageTitle="Sign up Page" signType="Sign in" />
       <main className="flex-1  flex items-center justify-center py-8">
         {/* <h1 className="text-center">Sign up</h1> */}
 

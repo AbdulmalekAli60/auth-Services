@@ -2,8 +2,9 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Input from "./Input";
 import { useState } from "react";
+import { signinService } from "../services/AuthServices";
 
-interface LogInData {
+export interface LogInData {
   userName: string;
   password: string;
 }
@@ -16,17 +17,25 @@ export default function Singin() {
   });
 
   // Event handlers
-  function handleChaneg(e:React.ChangeEvent<HTMLInputElement>){
-    const {name,value} = e.target
+  function handleChaneg(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
     setLogInData((prev) => ({
       ...prev,
-      [name]:value
-    }))
+      [name]: value,
+    }));
   }
 
   function handleFormSubmit(e: React.FormEvent): void {
     e.preventDefault();
-    // api request
+    signinService(LogInData)
+      .then((response) => {
+        console.log("login response: ", response);
+        sessionStorage.setItem("token", response.data.accessToken);
+        navigator("/")
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
   // Evenet Handlers
   return (
@@ -53,7 +62,6 @@ export default function Singin() {
               name="password"
               value={LogInData.password}
               onChange={handleChaneg}
-
             />
           </form>
 

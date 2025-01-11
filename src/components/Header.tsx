@@ -8,6 +8,10 @@ interface HeaderProps {
 export default function Header({pageTitle,signType}:HeaderProps) {
   const navigator = useNavigate();
 
+  if(sessionStorage.getItem("token") === null){
+    signType = "Log out"
+  }
+
   return (
     <header className=" h-14 bg-slate-950 p-4 flex justify-between items-center   ">
 
