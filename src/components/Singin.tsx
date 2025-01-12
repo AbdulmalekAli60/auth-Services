@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Input from "./Input";
 import { useState } from "react";
@@ -31,7 +31,7 @@ export default function Singin() {
       .then((response) => {
         console.log("login response: ", response);
         sessionStorage.setItem("token", response.data.accessToken);
-        navigator("/")
+        navigator("/");
       })
       .catch((e) => {
         console.error(e);
@@ -40,7 +40,7 @@ export default function Singin() {
   // Evenet Handlers
   return (
     <div>
-      <Header pageTitle="Sign in Page" signType="Sign up" />
+      <Header pageTitle="Sign in Page" signType="Sign up" signRoute="/signup" />
       <main className="flex-1  flex items-center justify-center py-8">
         {/* <h1 className="text-center">Sign up</h1> */}
 
@@ -72,8 +72,14 @@ export default function Singin() {
           >
             Sign in
           </button>
-        </div>
 
+          <div className="w-fit  flex gap-1 p-1 mt-3">
+            <span>Don't have an account?</span>
+            <Link className="text-blue-900" to={"/signup"}>
+              Sign up!
+            </Link>
+          </div>
+        </div>
         {/* form container */}
       </main>
     </div>

@@ -1,39 +1,56 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
-    pageTitle:string,
-    signType:string
+  pageTitle: string;
+  signType: string;
+  signRoute: string;
 }
 
-export default function Header({pageTitle,signType}:HeaderProps) {
+export default function Header({
+  pageTitle,
+  signType: initialSignType,
+  signRoute,
+}: HeaderProps) {
   const navigator = useNavigate();
 
-  if(sessionStorage.getItem("token") === null){
-    signType = "Log out"
+  const [signType, setSignType] = useState(initialSignType);
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token") !== null) {
+      setSignType("Log Out");
+    }
+  }, []);
+
+  // Event handlers
+  function handleHomePage() {
+    
+    if (signType === "Log Out") {
+      sessionStorage.removeItem("token");
+      navigator("/");
+      setSignType("Sign up");
+      // add sweet alert after signing out
+    } else {
+      navigator(`${signRoute}`);
+    }
   }
+  // Event handlers
 
   return (
-    <header className=" h-14 bg-slate-950 p-4 flex justify-between items-center   ">
+    <header className=" h-14 sticky bg-slate-950 p-4 flex justify-between items-center   ">
+      <h1 className="text-white">Auth and Comments</h1>
 
-        <h1 className="text-white">Auth and Comments</h1>
-     
-        <h1 className="text-center flex-1 text-white text-xl font-extrabold ">
-          {pageTitle}
-        </h1>
+      <h1 className="text-center flex-1 text-white text-xl font-extrabold ">
+        {pageTitle}
+      </h1>
 
       {/* buttons container */}
       <div className=" text-white">
-        <button
-          onClick={() => navigator("/")}
-          className=" mr-5"
-        >
+        <button onClick={() => navigator("/")} className={`mr-5`}>
           Home Page
         </button>
 
-        <button
-          onClick={() => navigator("/signin")}
-          className=""
-        >
+        <button onClick={handleHomePage} className="">
           {signType}
         </button>
       </div>

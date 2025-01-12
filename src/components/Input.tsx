@@ -20,7 +20,7 @@ export default function Input({ lable, name, type,value,onChange, error }: Input
       value={value}
       onChange={onChange}
       />
-      <span>{error}</span>
+      <span className="text-red-700">{error}</span>
     </div>
   );
 }
