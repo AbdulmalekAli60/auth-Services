@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Alert from "./Alert";
 
 interface HeaderProps {
   pageTitle: string;
@@ -27,9 +28,10 @@ export default function Header({
     
     if (signType === "Log Out") {
       sessionStorage.removeItem("token");
+      <Alert alertColor="bg-green-700" alertMessage="You logged Out successfully" show={true}/>
       navigator("/");
       setSignType("Sign up");
-      // add sweet alert after signing out
+      
     } else {
       navigator(`${signRoute}`);
     }

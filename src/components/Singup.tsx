@@ -11,6 +11,7 @@ import {
   validateForm,
   isFormValid,
 } from "../services/formValidation";
+import Alert from "./Alert";
 
 export interface FormData {
   name: string;
@@ -139,7 +140,7 @@ export default function Singup() {
 
           <div className="w-fit  flex gap-1 p-1 mt-3">
             <span>Have an account?</span>
-            <Link className="text-blue-900" to={"/signup"}>
+            <Link className="text-blue-900" to={"/signin"}>
               Sign in!
             </Link>
           </div>

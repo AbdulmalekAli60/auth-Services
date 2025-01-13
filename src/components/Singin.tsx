@@ -3,6 +3,7 @@ import Header from "./Header";
 import Input from "./Input";
 import { useState } from "react";
 import { signinService } from "../services/AuthServices";
+import Alert from "./Alert";
 
 export interface LogInData {
   userName: string;
@@ -30,7 +31,13 @@ export default function Singin() {
     signinService(LogInData)
       .then((response) => {
         console.log("login response: ", response);
+        <Alert
+        alertColor="bg-green-700"
+        alertMessage="Logged In!"
+        show={true}
+      />;
         sessionStorage.setItem("token", response.data.accessToken);
+       
         navigator("/");
       })
       .catch((e) => {

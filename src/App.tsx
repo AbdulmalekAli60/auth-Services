@@ -7,9 +7,8 @@ import { Routes, Route } from "react-router-dom";
 function App() {
   return (
     <div>
-      
       {/* routes */}
-      <Routes >
+      <Routes>
         {/* http://localhost:5173/ */}
         <Route path="/" element={<HomePage />} />
         {/* http://localhost:5173/signup */}
