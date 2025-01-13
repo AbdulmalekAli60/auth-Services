@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Alert from "./Alert";
+import { useAlert } from "../contexts/AlertContext";
 
 interface HeaderProps {
   pageTitle: string;
@@ -14,7 +14,7 @@ export default function Header({
   signRoute,
 }: HeaderProps) {
   const navigator = useNavigate();
-
+  const { showAlert } = useAlert();
   const [signType, setSignType] = useState(initialSignType);
 
   useEffect(() => {
@@ -25,13 +25,11 @@ export default function Header({
 
   // Event handlers
   function handleHomePage() {
-    
     if (signType === "Log Out") {
       sessionStorage.removeItem("token");
-      <Alert alertColor="bg-green-700" alertMessage="You logged Out successfully" show={true}/>
+      showAlert("Logged Out","bg-red-700")
       navigator("/");
       setSignType("Sign up");
-      
     } else {
       navigator(`${signRoute}`);
     }

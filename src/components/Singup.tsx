@@ -9,9 +9,10 @@ import {
   FormErrors,
   validateField,
   validateForm,
-  isFormValid,
+  // isFormValid,
 } from "../services/formValidation";
-import Alert from "./Alert";
+
+import { useAlert } from "../contexts/AlertContext";
 
 export interface FormData {
   name: string;
@@ -29,6 +30,8 @@ export default function Singup() {
     email: "",
     password: "",
   });
+
+  const { showAlert } = useAlert();
 
   const [Errors, setErrors] = useState<FormErrors>({
     name: "",
@@ -71,6 +74,8 @@ export default function Singup() {
       try {
         const response = await signupService(formData);
         sessionStorage.setItem("token", response.data.accessToken);
+        showAlert("Welcom!", "bg-green-700");
+
         navigator("/");
       } catch (error: any) {
         if (error.response) {
@@ -79,6 +84,7 @@ export default function Singup() {
             ...prev,
             [fieldName]: error.response.data.message,
           }));
+          showAlert("signing up faild", "bg-red-700");
         }
       }
     }
